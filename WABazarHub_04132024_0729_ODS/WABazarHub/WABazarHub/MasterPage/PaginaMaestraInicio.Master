@@ -1,0 +1,60 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="PaginaMaestraInicio.master.cs" Inherits="WABazarHub.MasterPage.PaginaMaestraInicio" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="../Estilos/EstilosMasterPage.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-8 col-md-8">
+                    <a href="PaginaInicio.aspx">
+                        <h1>Bazar Hub Online</h1>
+                    </a>
+
+                </div>
+                <div class="col-4 col-md-4 text-md-right text-center">
+                    <asp:LinkButton ID="btnInicioSesion" runat="server" CssClass="btn btn-link" OnClick="btnInicioSesion_Click">Inicio de sesión</asp:LinkButton>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <h2>Bazar Hub</h2>
+                    <div class="nav flex-column">
+                        <asp:Menu ID="NavigationMenu" runat="server" CssClass="navigation-menu" StaticDisplayLevels="1" Orientation="Vertical">
+                            <Items>
+                                <asp:MenuItem Text="Administracion" Value="ComprasOnline">
+                                    <asp:MenuItem Text="Registro De Productos" Value="Registro De Productos" NavigateUrl="../FormulariosWeb/AdministracionProductos.aspx"></asp:MenuItem>
+                                    <asp:MenuItem Text="Administracion De Pedidos" Value="Administracion De Pedidos" NavigateUrl="../FormulariosWeb/AdministracionPedidos.aspx"></asp:MenuItem>
+                                    <asp:MenuItem Text="Administracion De Proveedores" Value="Administracion De Proveedores" NavigateUrl="../FormulariosWeb/AdministracionProveedores.aspx"></asp:MenuItem>
+                                </asp:MenuItem>
+                                <asp:MenuItem Text="Hacer Pedido" Value="HacerPedido">
+                                    <asp:MenuItem Text="Personalizado" Value="Personalizado" NavigateUrl="~/PedidoPersonalizado.aspx"></asp:MenuItem>
+                                    <asp:MenuItem Text="Pedido Rápido" Value="PedidoRapido" NavigateUrl="~/PedidoRapido.aspx"></asp:MenuItem>
+                                </asp:MenuItem>
+                                <asp:MenuItem Text="Sobre Nosotros" Value="SobreNosotros" NavigateUrl="~/SobreNosotros.aspx"></asp:MenuItem>
+
+
+                            </Items>
+                        </asp:Menu>
+
+                    </div>
+                </div>
+                <div class="col-12 col-md-8">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
