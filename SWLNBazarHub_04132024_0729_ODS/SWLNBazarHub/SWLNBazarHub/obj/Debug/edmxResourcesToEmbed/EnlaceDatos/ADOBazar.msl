@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DBBazar2ModelStoreContainer" CdmEntityContainer="DBBazar2Entities">
+    <EntitySetMapping Name="Categorias">
+      <EntityTypeMapping TypeName="DBBazar2Model.Categorias">
+        <MappingFragment StoreEntitySet="Categorias">
+          <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetallesPedido">
+      <EntityTypeMapping TypeName="DBBazar2Model.DetallesPedido">
+        <MappingFragment StoreEntitySet="DetallesPedido">
+          <ScalarProperty Name="DetalleID" ColumnName="DetalleID" />
+          <ScalarProperty Name="PedidoID" ColumnName="PedidoID" />
+          <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+          <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DireccionesEnvio">
+      <EntityTypeMapping TypeName="DBBazar2Model.DireccionesEnvio">
+        <MappingFragment StoreEntitySet="DireccionesEnvio">
+          <ScalarProperty Name="DireccionID" ColumnName="DireccionID" />
+          <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+          <ScalarProperty Name="Pais" ColumnName="Pais" />
+          <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+          <ScalarProperty Name="RegistroEstado" ColumnName="RegistroEstado" />
+          <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pedidos">
+      <EntityTypeMapping TypeName="DBBazar2Model.Pedidos">
+        <MappingFragment StoreEntitySet="Pedidos">
+          <ScalarProperty Name="PedidoID" ColumnName="PedidoID" />
+          <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+          <ScalarProperty Name="FechaPedido" ColumnName="FechaPedido" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="DireccionEnvio" ColumnName="DireccionEnvio" />
+          <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Productos">
+      <EntityTypeMapping TypeName="DBBazar2Model.Productos">
+        <MappingFragment StoreEntitySet="Productos">
+          <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
+          <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Proveedores">
+      <EntityTypeMapping TypeName="DBBazar2Model.Proveedores">
+        <MappingFragment StoreEntitySet="Proveedores">
+          <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+          <ScalarProperty Name="NombreEmpresa" ColumnName="NombreEmpresa" />
+          <ScalarProperty Name="Contacto" ColumnName="Contacto" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoUsuario">
+      <EntityTypeMapping TypeName="DBBazar2Model.TipoUsuario">
+        <MappingFragment StoreEntitySet="TipoUsuario">
+          <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="DBBazar2Model.Usuarios">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+          <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spActualizarDetallePedido" FunctionName="DBBazar2Model.Store.spActualizarDetallePedido" />
+    <FunctionImportMapping FunctionImportName="spActualizarDireccionEnvio" FunctionName="DBBazar2Model.Store.spActualizarDireccionEnvio" />
+    <FunctionImportMapping FunctionImportName="spActualizarEstadoDetallePedido" FunctionName="DBBazar2Model.Store.spActualizarEstadoDetallePedido" />
+    <FunctionImportMapping FunctionImportName="spActualizarEstadoDireccionEnvio" FunctionName="DBBazar2Model.Store.spActualizarEstadoDireccionEnvio" />
+    <FunctionImportMapping FunctionImportName="spActualizarEstadoProducto" FunctionName="DBBazar2Model.Store.spActualizarEstadoProducto" />
+    <FunctionImportMapping FunctionImportName="spActualizarEstadoTipoUsuario" FunctionName="DBBazar2Model.Store.spActualizarEstadoTipoUsuario" />
+    <FunctionImportMapping FunctionImportName="spActualizarEstadoUsuario" FunctionName="DBBazar2Model.Store.spActualizarEstadoUsuario" />
+    <FunctionImportMapping FunctionImportName="spActualizarFechaEdicionDetallePedido" FunctionName="DBBazar2Model.Store.spActualizarFechaEdicionDetallePedido" />
+    <FunctionImportMapping FunctionImportName="spActualizarFechaEdicionDireccionEnvio" FunctionName="DBBazar2Model.Store.spActualizarFechaEdicionDireccionEnvio" />
+    <FunctionImportMapping FunctionImportName="spActualizarFechaEdicionProducto" FunctionName="DBBazar2Model.Store.spActualizarFechaEdicionProducto" />
+    <FunctionImportMapping FunctionImportName="spActualizarFechaEdicionTipoUsuario" FunctionName="DBBazar2Model.Store.spActualizarFechaEdicionTipoUsuario" />
+    <FunctionImportMapping FunctionImportName="spActualizarFechaEdicionUsuario" FunctionName="DBBazar2Model.Store.spActualizarFechaEdicionUsuario" />
+    <FunctionImportMapping FunctionImportName="spActualizarProducto" FunctionName="DBBazar2Model.Store.spActualizarProducto" />
+    <FunctionImportMapping FunctionImportName="spActualizarTipoUsuario" FunctionName="DBBazar2Model.Store.spActualizarTipoUsuario" />
+    <FunctionImportMapping FunctionImportName="spActualizarUsuario" FunctionName="DBBazar2Model.Store.spActualizarUsuario" />
+    <FunctionImportMapping FunctionImportName="spAgregarDetallePedido" FunctionName="DBBazar2Model.Store.spAgregarDetallePedido" />
+    <FunctionImportMapping FunctionImportName="spAgregarDireccionEnvio" FunctionName="DBBazar2Model.Store.spAgregarDireccionEnvio" />
+    <FunctionImportMapping FunctionImportName="spAgregarProducto" FunctionName="DBBazar2Model.Store.spAgregarProducto" />
+    <FunctionImportMapping FunctionImportName="spAgregarTipoUsuario" FunctionName="DBBazar2Model.Store.spAgregarTipoUsuario" />
+    <FunctionImportMapping FunctionImportName="spAgregarUsuario" FunctionName="DBBazar2Model.Store.spAgregarUsuario" />
+    <FunctionImportMapping FunctionImportName="spObtenerTodosProductos" FunctionName="DBBazar2Model.Store.spObtenerTodosProductos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DBBazar2Model.spObtenerTodosProductos_Result">
+          <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
+          <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+          <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+          <ScalarProperty Name="Proveedor" ColumnName="Proveedor" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spObtenerTodosTipoUsuario" FunctionName="DBBazar2Model.Store.spObtenerTodosTipoUsuario">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DBBazar2Model.spObtenerTodosTipoUsuario_Result">
+          <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spObtenerTodosUsuarios" FunctionName="DBBazar2Model.Store.spObtenerTodosUsuarios">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DBBazar2Model.spObtenerTodosUsuarios_Result">
+          <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+          <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+          <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

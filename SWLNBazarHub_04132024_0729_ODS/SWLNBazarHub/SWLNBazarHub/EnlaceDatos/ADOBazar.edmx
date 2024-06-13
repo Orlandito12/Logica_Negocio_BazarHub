@@ -1,0 +1,922 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBBazar2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="CategoriaID" />
+          </Key>
+          <Property Name="CategoriaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" />
+          <Property Name="FechaDeEdicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DetallesPedido">
+          <Key>
+            <PropertyRef Name="DetalleID" />
+          </Key>
+          <Property Name="DetalleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PedidoID" Type="int" />
+          <Property Name="ProductoID" Type="int" />
+          <Property Name="Cantidad" Type="int" />
+          <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Descuento" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" />
+          <Property Name="FechaDeEdicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DireccionesEnvio">
+          <Key>
+            <PropertyRef Name="DireccionID" />
+          </Key>
+          <Property Name="DireccionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" />
+          <Property Name="Direccion" Type="varchar" MaxLength="255" />
+          <Property Name="Ciudad" Type="varchar" MaxLength="100" />
+          <Property Name="Pais" Type="varchar" MaxLength="100" />
+          <Property Name="CodigoPostal" Type="varchar" MaxLength="20" />
+          <Property Name="RegistroEstado" Type="varchar" MaxLength="20" />
+          <Property Name="FechaDeEdicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Pedidos">
+          <Key>
+            <PropertyRef Name="PedidoID" />
+          </Key>
+          <Property Name="PedidoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" />
+          <Property Name="FechaPedido" Type="datetime" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" />
+          <Property Name="DireccionEnvio" Type="varchar" MaxLength="255" />
+          <Property Name="FechaDeEdicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="ProductoID" />
+          </Key>
+          <Property Name="ProductoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Descripcion" Type="text" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Stock" Type="int" />
+          <Property Name="CategoriaID" Type="int" />
+          <Property Name="ProveedorID" Type="int" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" />
+          <Property Name="FechaDeEdicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Proveedores">
+          <Key>
+            <PropertyRef Name="ProveedorID" />
+          </Key>
+          <Property Name="ProveedorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreEmpresa" Type="varchar" MaxLength="100" />
+          <Property Name="Contacto" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" />
+          <Property Name="FechaDeEdicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TipoUsuario">
+          <Key>
+            <PropertyRef Name="TipoUsuarioID" />
+          </Key>
+          <Property Name="TipoUsuarioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" />
+          <Property Name="FechaDeEdicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Contraseña" Type="varchar" MaxLength="50" />
+          <Property Name="TipoUsuarioID" Type="int" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" />
+          <Property Name="FechaDeEdicion" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_DetallesPedido_Pedidos">
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="0..1" />
+          <End Role="DetallesPedido" Type="Self.DetallesPedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedidos">
+              <PropertyRef Name="PedidoID" />
+            </Principal>
+            <Dependent Role="DetallesPedido">
+              <PropertyRef Name="PedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetallesPedido_Productos">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
+          <End Role="DetallesPedido" Type="Self.DetallesPedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="DetallesPedido">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DireccionesEnvio_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="DireccionesEnvio" Type="Self.DireccionesEnvio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="DireccionesEnvio">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedidos_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="Pedidos">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_Categorias">
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="CategoriaID" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="CategoriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_Proveedores">
+          <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedores">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="ProveedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_TipoUsuario">
+          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="0..1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuario">
+              <PropertyRef Name="TipoUsuarioID" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="TipoUsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spActualizarDetallePedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DetalleID" Type="int" Mode="In" />
+          <Parameter Name="Cantidad" Type="int" Mode="In" />
+          <Parameter Name="PrecioUnitario" Type="decimal" Mode="In" />
+          <Parameter Name="Descuento" Type="decimal" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spActualizarDireccionEnvio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DireccionID" Type="int" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+          <Parameter Name="Ciudad" Type="varchar" Mode="In" />
+          <Parameter Name="Pais" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoPostal" Type="varchar" Mode="In" />
+          <Parameter Name="RegistroEstado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spActualizarEstadoDetallePedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DetalleID" Type="int" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spActualizarEstadoDireccionEnvio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DireccionID" Type="int" Mode="In" />
+          <Parameter Name="RegistroEstado" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spActualizarEstadoProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProductoID" Type="int" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spActualizarEstadoTipoUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TipoUsuarioID" Type="int" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spActualizarEstadoUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UsuarioID" Type="int" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spActualizarFechaEdicionDetallePedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DetalleID" Type="int" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spActualizarFechaEdicionDireccionEnvio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DireccionID" Type="int" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spActualizarFechaEdicionProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProductoID" Type="int" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spActualizarFechaEdicionTipoUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TipoUsuarioID" Type="int" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spActualizarFechaEdicionUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UsuarioID" Type="int" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spActualizarProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProductoID" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="text" Mode="In" />
+          <Parameter Name="Precio" Type="decimal" Mode="In" />
+          <Parameter Name="Stock" Type="int" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spActualizarTipoUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TipoUsuarioID" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spActualizarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UsuarioID" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Contraseña" Type="varchar" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spAgregarDetallePedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PedidoID" Type="int" Mode="In" />
+          <Parameter Name="ProductoID" Type="int" Mode="In" />
+          <Parameter Name="Cantidad" Type="int" Mode="In" />
+          <Parameter Name="PrecioUnitario" Type="decimal" Mode="In" />
+          <Parameter Name="Descuento" Type="decimal" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spAgregarDireccionEnvio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UsuarioID" Type="int" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+          <Parameter Name="Ciudad" Type="varchar" Mode="In" />
+          <Parameter Name="Pais" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoPostal" Type="varchar" Mode="In" />
+          <Parameter Name="RegistroEstado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spAgregarProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="text" Mode="In" />
+          <Parameter Name="Precio" Type="decimal" Mode="In" />
+          <Parameter Name="Stock" Type="int" Mode="In" />
+          <Parameter Name="CategoriaID" Type="int" Mode="In" />
+          <Parameter Name="ProveedorID" Type="int" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spAgregarTipoUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spAgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Contraseña" Type="varchar" Mode="In" />
+          <Parameter Name="TipoUsuarioID" Type="int" Mode="In" />
+          <Parameter Name="Estado" Type="varchar" Mode="In" />
+          <Parameter Name="FechaDeEdicion" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="spObtenerTodosProductos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spObtenerTodosTipoUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spObtenerTodosUsuarios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="DBBazar2ModelStoreContainer">
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetallesPedido" EntityType="Self.DetallesPedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DireccionesEnvio" EntityType="Self.DireccionesEnvio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DetallesPedido_Pedidos" Association="Self.FK_DetallesPedido_Pedidos">
+            <End Role="Pedidos" EntitySet="Pedidos" />
+            <End Role="DetallesPedido" EntitySet="DetallesPedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetallesPedido_Productos" Association="Self.FK_DetallesPedido_Productos">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="DetallesPedido" EntitySet="DetallesPedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DireccionesEnvio_Usuarios" Association="Self.FK_DireccionesEnvio_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="DireccionesEnvio" EntitySet="DireccionesEnvio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedidos_Usuarios" Association="Self.FK_Pedidos_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_Categorias" Association="Self.FK_Productos_Categorias">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_Proveedores" Association="Self.FK_Productos_Proveedores">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_TipoUsuario" Association="Self.FK_Usuarios_TipoUsuario">
+            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBBazar2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="CategoriaID" />
+          </Key>
+          <Property Name="CategoriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDeEdicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK_Productos_Categorias" FromRole="Categorias" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="DetallesPedido">
+          <Key>
+            <PropertyRef Name="DetalleID" />
+          </Key>
+          <Property Name="DetalleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PedidoID" Type="Int32" />
+          <Property Name="ProductoID" Type="Int32" />
+          <Property Name="Cantidad" Type="Int32" />
+          <Property Name="PrecioUnitario" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Descuento" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDeEdicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Pedidos" Relationship="Self.FK_DetallesPedido_Pedidos" FromRole="DetallesPedido" ToRole="Pedidos" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK_DetallesPedido_Productos" FromRole="DetallesPedido" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="DireccionesEnvio">
+          <Key>
+            <PropertyRef Name="DireccionID" />
+          </Key>
+          <Property Name="DireccionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioID" Type="Int32" />
+          <Property Name="Direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Ciudad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Pais" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoPostal" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RegistroEstado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDeEdicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_DireccionesEnvio_Usuarios" FromRole="DireccionesEnvio" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Pedidos">
+          <Key>
+            <PropertyRef Name="PedidoID" />
+          </Key>
+          <Property Name="PedidoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioID" Type="Int32" />
+          <Property Name="FechaPedido" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DireccionEnvio" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDeEdicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DetallesPedido" Relationship="Self.FK_DetallesPedido_Pedidos" FromRole="Pedidos" ToRole="DetallesPedido" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Pedidos_Usuarios" FromRole="Pedidos" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="ProductoID" />
+          </Key>
+          <Property Name="ProductoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Precio" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Stock" Type="Int32" />
+          <Property Name="CategoriaID" Type="Int32" />
+          <Property Name="ProveedorID" Type="Int32" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDeEdicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Categorias" Relationship="Self.FK_Productos_Categorias" FromRole="Productos" ToRole="Categorias" />
+          <NavigationProperty Name="DetallesPedido" Relationship="Self.FK_DetallesPedido_Productos" FromRole="Productos" ToRole="DetallesPedido" />
+          <NavigationProperty Name="Proveedores" Relationship="Self.FK_Productos_Proveedores" FromRole="Productos" ToRole="Proveedores" />
+        </EntityType>
+        <EntityType Name="Proveedores">
+          <Key>
+            <PropertyRef Name="ProveedorID" />
+          </Key>
+          <Property Name="ProveedorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDeEdicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK_Productos_Proveedores" FromRole="Proveedores" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="TipoUsuario">
+          <Key>
+            <PropertyRef Name="TipoUsuarioID" />
+          </Key>
+          <Property Name="TipoUsuarioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDeEdicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuarios_TipoUsuario" FromRole="TipoUsuario" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Contraseña" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TipoUsuarioID" Type="Int32" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDeEdicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DireccionesEnvio" Relationship="Self.FK_DireccionesEnvio_Usuarios" FromRole="Usuarios" ToRole="DireccionesEnvio" />
+          <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_Usuarios" FromRole="Usuarios" ToRole="Pedidos" />
+          <NavigationProperty Name="TipoUsuario" Relationship="Self.FK_Usuarios_TipoUsuario" FromRole="Usuarios" ToRole="TipoUsuario" />
+        </EntityType>
+        <Association Name="FK_Productos_Categorias">
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="CategoriaID" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="CategoriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetallesPedido_Pedidos">
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="0..1" />
+          <End Role="DetallesPedido" Type="Self.DetallesPedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedidos">
+              <PropertyRef Name="PedidoID" />
+            </Principal>
+            <Dependent Role="DetallesPedido">
+              <PropertyRef Name="PedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetallesPedido_Productos">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
+          <End Role="DetallesPedido" Type="Self.DetallesPedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="DetallesPedido">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DireccionesEnvio_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="DireccionesEnvio" Type="Self.DireccionesEnvio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="DireccionesEnvio">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedidos_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="Pedidos">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_Proveedores">
+          <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedores">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="ProveedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_TipoUsuario">
+          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="0..1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuario">
+              <PropertyRef Name="TipoUsuarioID" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="TipoUsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBBazar2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" />
+          <EntitySet Name="DetallesPedido" EntityType="Self.DetallesPedido" />
+          <EntitySet Name="DireccionesEnvio" EntityType="Self.DireccionesEnvio" />
+          <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" />
+          <EntitySet Name="Proveedores" EntityType="Self.Proveedores" />
+          <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK_Productos_Categorias" Association="Self.FK_Productos_Categorias">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetallesPedido_Pedidos" Association="Self.FK_DetallesPedido_Pedidos">
+            <End Role="Pedidos" EntitySet="Pedidos" />
+            <End Role="DetallesPedido" EntitySet="DetallesPedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetallesPedido_Productos" Association="Self.FK_DetallesPedido_Productos">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="DetallesPedido" EntitySet="DetallesPedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DireccionesEnvio_Usuarios" Association="Self.FK_DireccionesEnvio_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="DireccionesEnvio" EntitySet="DireccionesEnvio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedidos_Usuarios" Association="Self.FK_Pedidos_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_Proveedores" Association="Self.FK_Productos_Proveedores">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_TipoUsuario" Association="Self.FK_Usuarios_TipoUsuario">
+            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <FunctionImport Name="spActualizarDetallePedido">
+            <Parameter Name="DetalleID" Mode="In" Type="Int32" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="PrecioUnitario" Mode="In" Type="Decimal" />
+            <Parameter Name="Descuento" Mode="In" Type="Decimal" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarDireccionEnvio">
+            <Parameter Name="DireccionID" Mode="In" Type="Int32" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="Ciudad" Mode="In" Type="String" />
+            <Parameter Name="Pais" Mode="In" Type="String" />
+            <Parameter Name="CodigoPostal" Mode="In" Type="String" />
+            <Parameter Name="RegistroEstado" Mode="In" Type="String" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarEstadoDetallePedido">
+            <Parameter Name="DetalleID" Mode="In" Type="Int32" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarEstadoDireccionEnvio">
+            <Parameter Name="DireccionID" Mode="In" Type="Int32" />
+            <Parameter Name="RegistroEstado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarEstadoProducto">
+            <Parameter Name="ProductoID" Mode="In" Type="Int32" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarEstadoTipoUsuario">
+            <Parameter Name="TipoUsuarioID" Mode="In" Type="Int32" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarEstadoUsuario">
+            <Parameter Name="UsuarioID" Mode="In" Type="Int32" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarFechaEdicionDetallePedido">
+            <Parameter Name="DetalleID" Mode="In" Type="Int32" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarFechaEdicionDireccionEnvio">
+            <Parameter Name="DireccionID" Mode="In" Type="Int32" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarFechaEdicionProducto">
+            <Parameter Name="ProductoID" Mode="In" Type="Int32" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarFechaEdicionTipoUsuario">
+            <Parameter Name="TipoUsuarioID" Mode="In" Type="Int32" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarFechaEdicionUsuario">
+            <Parameter Name="UsuarioID" Mode="In" Type="Int32" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarProducto">
+            <Parameter Name="ProductoID" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Precio" Mode="In" Type="Decimal" />
+            <Parameter Name="Stock" Mode="In" Type="Int32" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarTipoUsuario">
+            <Parameter Name="TipoUsuarioID" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spActualizarUsuario">
+            <Parameter Name="UsuarioID" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Contraseña" Mode="In" Type="String" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spAgregarDetallePedido">
+            <Parameter Name="PedidoID" Mode="In" Type="Int32" />
+            <Parameter Name="ProductoID" Mode="In" Type="Int32" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="PrecioUnitario" Mode="In" Type="Decimal" />
+            <Parameter Name="Descuento" Mode="In" Type="Decimal" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spAgregarDireccionEnvio">
+            <Parameter Name="UsuarioID" Mode="In" Type="Int32" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="Ciudad" Mode="In" Type="String" />
+            <Parameter Name="Pais" Mode="In" Type="String" />
+            <Parameter Name="CodigoPostal" Mode="In" Type="String" />
+            <Parameter Name="RegistroEstado" Mode="In" Type="String" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spAgregarProducto">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Precio" Mode="In" Type="Decimal" />
+            <Parameter Name="Stock" Mode="In" Type="Int32" />
+            <Parameter Name="CategoriaID" Mode="In" Type="Int32" />
+            <Parameter Name="ProveedorID" Mode="In" Type="Int32" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spAgregarTipoUsuario">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spAgregarUsuario">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Contraseña" Mode="In" Type="String" />
+            <Parameter Name="TipoUsuarioID" Mode="In" Type="Int32" />
+            <Parameter Name="Estado" Mode="In" Type="String" />
+            <Parameter Name="FechaDeEdicion" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spObtenerTodosProductos" ReturnType="Collection(DBBazar2Model.spObtenerTodosProductos_Result)" />
+          <FunctionImport Name="spObtenerTodosTipoUsuario" ReturnType="Collection(DBBazar2Model.spObtenerTodosTipoUsuario_Result)" />
+          <FunctionImport Name="spObtenerTodosUsuarios" ReturnType="Collection(DBBazar2Model.spObtenerTodosUsuarios_Result)" />
+        </EntityContainer>
+        <ComplexType Name="spObtenerTodosProductos_Result">
+          <Property Type="Int32" Name="ProductoID" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="Max" />
+          <Property Type="Decimal" Name="Precio" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="Stock" Nullable="true" />
+          <Property Type="Int32" Name="CategoriaID" Nullable="true" />
+          <Property Type="Int32" Name="ProveedorID" Nullable="true" />
+          <Property Type="String" Name="Estado" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="FechaDeEdicion" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Categoria" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Proveedor" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="spObtenerTodosTipoUsuario_Result">
+          <Property Type="Int32" Name="TipoUsuarioID" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Estado" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="FechaDeEdicion" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="spObtenerTodosUsuarios_Result">
+          <Property Type="Int32" Name="UsuarioID" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Contraseña" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="TipoUsuarioID" Nullable="true" />
+          <Property Type="String" Name="Estado" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="FechaDeEdicion" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TipoUsuario" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBBazar2ModelStoreContainer" CdmEntityContainer="DBBazar2Entities">
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="DBBazar2Model.Categorias">
+              <MappingFragment StoreEntitySet="Categorias">
+                <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetallesPedido">
+            <EntityTypeMapping TypeName="DBBazar2Model.DetallesPedido">
+              <MappingFragment StoreEntitySet="DetallesPedido">
+                <ScalarProperty Name="DetalleID" ColumnName="DetalleID" />
+                <ScalarProperty Name="PedidoID" ColumnName="PedidoID" />
+                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DireccionesEnvio">
+            <EntityTypeMapping TypeName="DBBazar2Model.DireccionesEnvio">
+              <MappingFragment StoreEntitySet="DireccionesEnvio">
+                <ScalarProperty Name="DireccionID" ColumnName="DireccionID" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="RegistroEstado" ColumnName="RegistroEstado" />
+                <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedidos">
+            <EntityTypeMapping TypeName="DBBazar2Model.Pedidos">
+              <MappingFragment StoreEntitySet="Pedidos">
+                <ScalarProperty Name="PedidoID" ColumnName="PedidoID" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="FechaPedido" ColumnName="FechaPedido" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="DireccionEnvio" ColumnName="DireccionEnvio" />
+                <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="DBBazar2Model.Productos">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
+                <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedores">
+            <EntityTypeMapping TypeName="DBBazar2Model.Proveedores">
+              <MappingFragment StoreEntitySet="Proveedores">
+                <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+                <ScalarProperty Name="NombreEmpresa" ColumnName="NombreEmpresa" />
+                <ScalarProperty Name="Contacto" ColumnName="Contacto" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoUsuario">
+            <EntityTypeMapping TypeName="DBBazar2Model.TipoUsuario">
+              <MappingFragment StoreEntitySet="TipoUsuario">
+                <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="DBBazar2Model.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spActualizarDetallePedido" FunctionName="DBBazar2Model.Store.spActualizarDetallePedido" />
+          <FunctionImportMapping FunctionImportName="spActualizarDireccionEnvio" FunctionName="DBBazar2Model.Store.spActualizarDireccionEnvio" />
+          <FunctionImportMapping FunctionImportName="spActualizarEstadoDetallePedido" FunctionName="DBBazar2Model.Store.spActualizarEstadoDetallePedido" />
+          <FunctionImportMapping FunctionImportName="spActualizarEstadoDireccionEnvio" FunctionName="DBBazar2Model.Store.spActualizarEstadoDireccionEnvio" />
+          <FunctionImportMapping FunctionImportName="spActualizarEstadoProducto" FunctionName="DBBazar2Model.Store.spActualizarEstadoProducto" />
+          <FunctionImportMapping FunctionImportName="spActualizarEstadoTipoUsuario" FunctionName="DBBazar2Model.Store.spActualizarEstadoTipoUsuario" />
+          <FunctionImportMapping FunctionImportName="spActualizarEstadoUsuario" FunctionName="DBBazar2Model.Store.spActualizarEstadoUsuario" />
+          <FunctionImportMapping FunctionImportName="spActualizarFechaEdicionDetallePedido" FunctionName="DBBazar2Model.Store.spActualizarFechaEdicionDetallePedido" />
+          <FunctionImportMapping FunctionImportName="spActualizarFechaEdicionDireccionEnvio" FunctionName="DBBazar2Model.Store.spActualizarFechaEdicionDireccionEnvio" />
+          <FunctionImportMapping FunctionImportName="spActualizarFechaEdicionProducto" FunctionName="DBBazar2Model.Store.spActualizarFechaEdicionProducto" />
+          <FunctionImportMapping FunctionImportName="spActualizarFechaEdicionTipoUsuario" FunctionName="DBBazar2Model.Store.spActualizarFechaEdicionTipoUsuario" />
+          <FunctionImportMapping FunctionImportName="spActualizarFechaEdicionUsuario" FunctionName="DBBazar2Model.Store.spActualizarFechaEdicionUsuario" />
+          <FunctionImportMapping FunctionImportName="spActualizarProducto" FunctionName="DBBazar2Model.Store.spActualizarProducto" />
+          <FunctionImportMapping FunctionImportName="spActualizarTipoUsuario" FunctionName="DBBazar2Model.Store.spActualizarTipoUsuario" />
+          <FunctionImportMapping FunctionImportName="spActualizarUsuario" FunctionName="DBBazar2Model.Store.spActualizarUsuario" />
+          <FunctionImportMapping FunctionImportName="spAgregarDetallePedido" FunctionName="DBBazar2Model.Store.spAgregarDetallePedido" />
+          <FunctionImportMapping FunctionImportName="spAgregarDireccionEnvio" FunctionName="DBBazar2Model.Store.spAgregarDireccionEnvio" />
+          <FunctionImportMapping FunctionImportName="spAgregarProducto" FunctionName="DBBazar2Model.Store.spAgregarProducto" />
+          <FunctionImportMapping FunctionImportName="spAgregarTipoUsuario" FunctionName="DBBazar2Model.Store.spAgregarTipoUsuario" />
+          <FunctionImportMapping FunctionImportName="spAgregarUsuario" FunctionName="DBBazar2Model.Store.spAgregarUsuario" />
+          <FunctionImportMapping FunctionImportName="spObtenerTodosProductos" FunctionName="DBBazar2Model.Store.spObtenerTodosProductos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBBazar2Model.spObtenerTodosProductos_Result">
+                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
+                <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Proveedor" ColumnName="Proveedor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spObtenerTodosTipoUsuario" FunctionName="DBBazar2Model.Store.spObtenerTodosTipoUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBBazar2Model.spObtenerTodosTipoUsuario_Result">
+                <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spObtenerTodosUsuarios" FunctionName="DBBazar2Model.Store.spObtenerTodosUsuarios">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBBazar2Model.spObtenerTodosUsuarios_Result">
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaDeEdicion" ColumnName="FechaDeEdicion" />
+                <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
